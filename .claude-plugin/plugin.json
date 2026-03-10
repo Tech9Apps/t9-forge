@@ -1,0 +1,5 @@
+{
+  "name": "claude-code-toolkit",
+  "description": "Interactive agent that initializes projects for Claude Code — generates CLAUDE.md and provides customized skills, hooks, and commands",
+  "version": "1.0.0"
+}

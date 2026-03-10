@@ -1,0 +1,6 @@
+{
+  "event": "PreToolUse",
+  "tools": ["Bash"],
+  "command": "echo \"$TOOL_INPUT\" | grep -qE '(rm\\s+-rf|drop\\s+table|truncate\\s+table|git\\s+push\\s+--force|git\\s+reset\\s+--hard|shutdown|reboot|mkfs|dd\\s+if=|:(){ :|:& };:)' && echo 'WARNING: This command may be destructive. Please review carefully.' && exit 1 || exit 0",
+  "description": "Warn before potentially destructive bash commands"
+}

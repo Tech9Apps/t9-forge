@@ -1,0 +1,6 @@
+{
+  "event": "PostToolUse",
+  "tools": ["Write", "Edit"],
+  "command": "{{LINT_COMMAND}} $FILE_PATH",
+  "description": "Auto-lint files after editing"
+}

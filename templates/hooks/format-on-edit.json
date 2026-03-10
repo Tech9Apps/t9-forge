@@ -1,0 +1,6 @@
+{
+  "event": "PostToolUse",
+  "tools": ["Write", "Edit"],
+  "command": "{{FORMAT_COMMAND}} $FILE_PATH",
+  "description": "Auto-format files after editing"
+}
