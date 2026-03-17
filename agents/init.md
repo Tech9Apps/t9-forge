@@ -126,6 +126,14 @@ Skills (in `.claude/skills/`):
 - `code-review/SKILL.md` — Code quality and security review
 - `pr/SKILL.md` — Create a pull request with description (only offer when `gh` CLI is available)
 - `fix-issue/SKILL.md` — Fix a GitHub issue end-to-end: read issue, find code, fix, test, commit, PR (only offer when `gh` CLI is available)
+- `qa/SKILL.md` — 5-phase QA workflow: reconnaissance, probing questions, test plan, spec writing, execution
+- `onboard/SKILL.md` — Codebase onboarding: zoom in, zoom out, learn history, document, suggest opportunities
+- `deep-review/SKILL.md` — 8-lens code review with severity levels and structured report (more thorough than code-review)
+- `legacy-audit/SKILL.md` — Audit for modernization: dependency age, dead code, complexity hotspots, test coverage gaps
+- `explain-system/SKILL.md` — Explore codebase and write a verified system design document
+- `walkthrough/SKILL.md` — Trace one feature end-to-end and produce a guided code walkthrough
+- `use-library/SKILL.md` — Read library docs before using it: fetch docs, check version, verify compatibility
+- `context-audit/SKILL.md` — Audit context window usage and find optimization opportunities
 
 Hooks (in `.claude/hooks/`):
 - `lint-on-edit.json` — Auto-lint after file edits (only offer when the linter is fast and deterministic)
@@ -148,13 +156,27 @@ Commands (in `.claude/commands/`):
 
 > Here's what I'd like to set up for your project:
 >
-> **Skills:**
+> **Skills — Core:**
 > - [x] /commit — conventional commit workflow
 > - [x] /test — run relevant tests
 > - [x] /verify — full verification chain
 > - [x] /code-review — code quality review
 > - [ ] /pr — (skipped: `gh` CLI not found)
 > - [ ] /fix-issue — (skipped: `gh` CLI not found)
+>
+> **Skills — QA & Review:**
+> - [x] /qa — 5-phase QA workflow
+> - [x] /deep-review — 8-lens code review
+>
+> **Skills — Exploration & Documentation:**
+> - [x] /onboard — codebase onboarding
+> - [x] /explain-system — system design document
+> - [x] /walkthrough — feature code walkthrough
+>
+> **Skills — Maintenance:**
+> - [x] /legacy-audit — modernization audit
+> - [x] /use-library — safe library usage
+> - [x] /context-audit — context window optimization
 >
 > **Hooks:**
 > - [x] format-on-edit — auto-format with prettier
@@ -178,10 +200,22 @@ Wait for the user to confirm before proceeding with customization.
 **Process:**
 1. Read each template from the plugin's `templates/` directory
 2. Customize placeholders with detected project tooling:
-   - `{{TEST_COMMAND}}` → the project's actual test command
+   - `{{TEST_COMMAND}}` → the project's actual test command (e.g., `npx jest --findRelatedTests`)
+   - `{{TEST_ALL_COMMAND}}` → command to run the full test suite (e.g., `npm test`)
    - `{{LINT_COMMAND}}` → the project's actual lint command
    - `{{FORMAT_COMMAND}}` → the project's actual format command
+   - `{{BUILD_COMMAND}}` → the project's build command
+   - `{{TYPECHECK_COMMAND}}` → the project's type check command
    - `{{DEV_SERVER_COMMAND}}` → the project's actual dev server command
+   - `{{DEPENDENCY_FILE}}` → the project's dependency file (e.g., `package.json`)
+   - `{{DEPENDENCY_CHECK_COMMAND}}` → command to check outdated deps (e.g., `npm outdated`)
+   - `{{SECURITY_AUDIT_COMMAND}}` → command to run security audit (e.g., `npm audit`)
+   - `{{COVERAGE_COMMAND}}` → command to run test coverage (e.g., `npx jest --coverage`)
+   - `{{INSTALL_COMMAND}}` → command to install dependencies (e.g., `npm install`)
+   - `{{PACKAGE_INFO_COMMAND}}` → command to look up package info (e.g., `npm view`)
+   - `{{PACKAGE_VERSION_COMMAND}}` → command to check latest version (e.g., `npm view $ARGUMENTS version`)
+   - `{{CODE_REVIEW_CONVENTIONS}}` → project-specific code review conventions
+   - `{{TEST_FILE_PATTERNS}}` → how test files map to source files
    - Other placeholders as documented in each template
 3. Present each customized template to the user
 4. Only write files the user approves
