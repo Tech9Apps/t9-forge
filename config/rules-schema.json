@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "claude-code-toolkit canonical rules schema",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "projectProfile",
+    "architectureRules",
+    "apiRules",
+    "testingRules",
+    "workflowRules",
+    "securityRules"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "description": "Semantic schema version, for example 1.0.0"
+    },
+    "projectProfile": {
+      "type": "object",
+      "required": ["stack", "targets"],
+      "properties": {
+        "stack": { "type": "string" },
+        "targets": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["claude", "cursor"] },
+          "minItems": 1
+        },
+        "runtimeCapabilities": {
+          "type": "object",
+          "description": "Discovered runtime/tooling capabilities used to gate generated workflows.",
+          "properties": {
+            "hasGitRepo": { "type": "boolean" },
+            "hasGitHubCli": { "type": "boolean" },
+            "hasBun": { "type": "boolean" },
+            "hasBrowserAutomationBackend": { "type": "boolean" },
+            "supportsMacOSKeychainImport": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "architectureRules": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "apiRules": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "testingRules": {
+      "type": "object",
+      "required": ["enabledLayers", "minimumChecks"],
+      "properties": {
+        "enabledLayers": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["unit", "integration", "e2e"] }
+        },
+        "minimumChecks": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "workflowRules": {
+      "type": "object",
+      "required": ["requirePlanVerifyBeforeExecution"],
+      "properties": {
+        "requirePlanVerifyBeforeExecution": { "type": "boolean" },
+        "reviewStyle": {
+          "type": "string",
+          "enum": ["interactive-section-gates", "single-pass"]
+        },
+        "workflowCapabilities": {
+          "type": "object",
+          "description": "Per-workflow capability mapping used by target renderers to include, adapt, or degrade behavior.",
+          "properties": {
+            "planCeoReview": {
+              "type": "string",
+              "enum": ["portable", "runtime-backed"]
+            },
+            "planEngReview": {
+              "type": "string",
+              "enum": ["portable", "runtime-backed"]
+            },
+            "planDesignReview": {
+              "type": "string",
+              "enum": ["portable", "runtime-backed"]
+            },
+            "review": {
+              "type": "string",
+              "enum": ["portable", "runtime-backed"]
+            },
+            "ship": {
+              "type": "string",
+              "enum": ["portable", "runtime-backed"]
+            },
+            "browse": {
+              "type": "string",
+              "enum": ["portable", "runtime-backed"]
+            },
+            "qa": {
+              "type": "string",
+              "enum": ["portable", "runtime-backed"]
+            },
+            "qaOnly": {
+              "type": "string",
+              "enum": ["portable", "runtime-backed"]
+            },
+            "qaDesignReview": {
+              "type": "string",
+              "enum": ["portable", "runtime-backed"]
+            },
+            "setupBrowserCookies": {
+              "type": "string",
+              "enum": ["portable", "runtime-backed"]
+            },
+            "retro": {
+              "type": "string",
+              "enum": ["portable", "runtime-backed"]
+            },
+            "documentRelease": {
+              "type": "string",
+              "enum": ["portable", "runtime-backed"]
+            }
+          }
+        },
+        "fallbackPolicy": {
+          "type": "string",
+          "enum": ["skip", "report-only", "ask-user"]
+        }
+      }
+    },
+    "securityRules": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

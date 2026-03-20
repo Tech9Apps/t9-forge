@@ -1,0 +1,12 @@
+{
+  "name": "claude-code-toolkit",
+  "displayName": "claude-code-toolkit",
+  "description": "Interactive setup toolkit for Claude and Cursor: analyzes repositories, captures project standards, and generates rules and documentation outputs",
+  "version": "1.1.0",
+  "homepage": "https://github.com/local/claude-code-toolkit",
+  "repository": "https://github.com/local/claude-code-toolkit",
+  "license": "MIT",
+  "keywords": ["setup", "rules", "skills", "workflow", "standards"],
+  "skills": "./skills/",
+  "agents": "./agents/"
+}

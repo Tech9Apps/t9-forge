@@ -1,6 +1,6 @@
 {
   "event": "PreToolUse",
   "tools": ["Bash"],
-  "command": "echo \"$TOOL_INPUT\" | grep -qE '^git commit' && {{LINT_COMMAND}} && {{FORMAT_COMMAND}} && {{TYPECHECK_COMMAND}} || exit 0",
+  "command": "echo \"$TOOL_INPUT\" | grep -qE '^git commit' && {{LINT_COMMAND}} && {{FORMAT_COMMAND}}{{TYPECHECK_CHAIN}} || exit 0",
   "description": "Run lint, format, and type-check before commits"
 }

@@ -1,0 +1,19 @@
+---
+description: Workflow and planning rules
+alwaysApply: true
+---
+
+# Workflow Rules
+
+- Plan before implementation for medium/large work.
+- `plan-verify` is mandatory before execution workflows.
+- Use numbered issues and lettered options during critical review.
+- Ask for explicit approval before writing files for risky changes.
+- Support these workflows with capability-gated behavior:
+  - `/plan-ceo-review`, `/plan-eng-review`, `/plan-design-review`
+  - `/review`, `/ship`, `/browse`, `/qa`, `/qa-only`, `/qa-design-review`
+  - `/setup-browser-cookies`, `/retro`, `/document-release`
+- Use Cursor browser tooling for browser-backed checks.
+- If runtime capabilities are missing, switch to report-only mode and list prerequisites.
+
+{{WORKFLOW_RULES}}

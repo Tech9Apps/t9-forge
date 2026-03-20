@@ -1,0 +1,12 @@
+---
+description: Architecture and boundaries rules
+alwaysApply: true
+---
+
+# Architecture Rules
+
+{{ARCHITECTURE_RULES}}
+
+## Additional Constraints
+- Keep module boundaries explicit.
+- Prefer explicit interfaces over implicit coupling.

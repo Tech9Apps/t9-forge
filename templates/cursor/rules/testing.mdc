@@ -1,0 +1,15 @@
+---
+description: Testing strategy and quality gates
+alwaysApply: true
+---
+
+# Testing Rules
+
+Enabled layers: {{TEST_LAYERS}}
+
+{{TESTING_RULES}}
+
+## Verification Baseline
+- `{{LINT_COMMAND}}`
+- `{{TYPECHECK_COMMAND}}`
+- `{{TEST_ALL_COMMAND}}`

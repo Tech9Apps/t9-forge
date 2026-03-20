@@ -1,0 +1,15 @@
+{
+  "target": "cursor",
+  "instructionsFile": "AGENTS.md",
+  "rulesOutput": ".cursor/rules",
+  "skillsDir": null,
+  "hooksDir": null,
+  "commandsDir": null,
+  "agentsDir": null,
+  "supportsHooks": false,
+  "supportsBrowserAutomation": true,
+  "supportsCookieImport": false,
+  "supportsGitHubPR": true,
+  "supportsRetrospectives": true,
+  "supportsRuntimeArtifacts": false
+}

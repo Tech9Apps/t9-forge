@@ -1,0 +1,11 @@
+---
+description: API and data contract rules
+alwaysApply: true
+---
+
+# API and Data Rules
+
+{{API_RULES}}
+
+## Data Contract Rules
+{{DATA_RULES}}

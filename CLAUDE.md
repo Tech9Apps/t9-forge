@@ -1,59 +1,115 @@
 # claude-code-toolkit
 
-A Claude Code plugin that initializes projects for optimal Claude Code usage.
+A cross-platform setup plugin for Claude and Cursor.
 
 ## What This Is
 
-This is a Claude Code plugin — not a standalone application. It provides:
-- A sub agent (`agents/init.md`) that interactively evaluates codebases
-- A skill (`/claude-code-toolkit:init`) as the user entry point
-- Template files that get customized and copied into target projects
+This is a plugin repository (not a standalone app). It provides:
+- a setup agent (`agents/init.md`) that evaluates repositories interactively
+- setup entrypoint skills (`/claude-code-toolkit:setup`, `/claude-code-toolkit:init`, aliases)
+- template artifacts customized into target projects
 
 ## Project Structure
 
 ```
-.claude-plugin/plugin.json    — Plugin manifest
-agents/init.md                — Main interactive agent (4-phase flow)
-skills/init/SKILL.md          — Entry point skill
+.claude-plugin/plugin.json      — Claude plugin manifest
+.cursor-plugin/plugin.json      — Cursor plugin manifest
+agents/init.md                  — Main interactive setup agent
+skills/                         — Entrypoint skills
 templates/
-  skills/                     — Template skills (commit, test, code-review, pr, fix-issue)
-  hooks/                      — Template hooks (lint, format, validate, pre-commit, notify)
-  commands/                   — Template commands (healthcheck, logs, serve)
-  docs/                       — Template doc files (architecture, api, testing)
+  skills/                       — Generated workflow skills
+  hooks/                        — Generated Claude hooks
+  commands/                     — Generated operator commands
+  docs/                         — Generated project docs
+  agents/                       — Generated specialist agents
+  cursor/                       — Cursor artifacts (AGENTS + rules)
+config/rules-schema.json        — Canonical rules schema
+config/targets/*.json           — Target capability mappings
+tests/test_contracts.py         — Contract/regression checks
 ```
 
 ## Key Conventions
 
-- Templates use `{{PLACEHOLDER}}` syntax for values the agent fills in
-- Templates include HTML comments (`<!-- -->`) with examples for common stacks
-- The agent is framework/language agnostic — it discovers the stack, not assumes it
-- All templates are generic; the agent customizes them per-project during Phase 4
-- Documentation files should stay under 300 lines each
+- Templates use `{{PLACEHOLDER}}` syntax for discovered project values.
+- Templates include commented examples for common stacks where helpful.
+- The setup agent is stack-agnostic and evidence-driven.
+- Outputs are interactive/approval-gated; never auto-apply.
+- Rules are normalized once, then rendered per target.
+- Runtime-backed workflows are capability-gated by discovered tooling and target support flags.
 
 ## Template Placeholders
 
-Common placeholders used across templates:
-- `{{LINT_COMMAND}}` — project's lint command
-- `{{FORMAT_COMMAND}}` — project's format command
-- `{{TEST_COMMAND}}` — project's test command (specific files)
-- `{{TEST_ALL_COMMAND}}` — project's full test suite command
-- `{{DEV_SERVER_COMMAND}}` — project's dev server command
-- `{{BUILD_COMMAND}}` — project's build command
-- `{{PROJECT_NAME}}` — project name
-- `{{VERIFY_COMMAND}}` — project's full verification chain
-- `{{PR_CONVENTIONS}}` — team's PR description conventions
-- `{{NOTIFY_COMMAND}}` — OS-appropriate desktop notification command
+Core command placeholders:
+- `{{BUILD_COMMAND}}`
+- `{{LINT_COMMAND}}`
+- `{{FORMAT_COMMAND}}`
+- `{{TYPECHECK_COMMAND}}`
+- `{{TYPECHECK_CHAIN}}` (empty or ` && <typecheck command>`)
+- `{{TEST_COMMAND}}`
+- `{{TEST_ALL_COMMAND}}`
+- `{{DEV_SERVER_COMMAND}}`
+- `{{VERIFY_COMMAND}}`
+
+Context placeholders:
+- `{{PROJECT_NAME}}`
+- `{{STACK_SUMMARY}}`
+- `{{PR_CONVENTIONS}}`
+- `{{CODE_REVIEW_CONVENTIONS}}`
+- `{{COMMIT_CONVENTIONS}}`
+- `{{COMMIT_TRAILER}}`
+
+Operational placeholders:
+- `{{LOG_COMMAND}}`
+- `{{CI_STATUS_COMMAND}}`
+- `{{DEPLOY_STATUS_COMMAND}}`
+- `{{ROLLBACK_STATUS_COMMAND}}`
+- `{{NOTIFY_COMMAND}}`
+- `{{ADDITIONAL_SERVICES}}`
+
+Rules-render placeholders:
+- `{{ARCHITECTURE_RULES}}`
+- `{{API_RULES}}`
+- `{{DATA_RULES}}`
+- `{{TEST_LAYERS}}`
+- `{{TESTING_RULES}}`
+- `{{WORKFLOW_RULES}}`
+
+## Workflow Coverage
+
+Full workflow set expected in generated templates:
+
+- Planning: `plan`, `plan-verify`, `plan-ceo-review`, `plan-eng-review`, `plan-design-review`
+- Quality and release: `review`, `ship`, `qa`, `qa-only`, `qa-design-review`, `browse`, `setup-browser-cookies`
+- Documentation and learning: `document-release`, `retro`
+
+Runtime-backed workflows (`browse`, `qa*`, `setup-browser-cookies`, parts of `ship`) must degrade gracefully when capabilities are missing.
+
+## Target Capability Flags
+
+Target definitions in `config/targets/*.json` should include:
+
+- `supportsHooks`
+- `supportsBrowserAutomation`
+- `supportsCookieImport`
+- `supportsGitHubPR`
+- `supportsRetrospectives`
+- `supportsRuntimeArtifacts`
+
+Renderers should intersect target flags with discovered runtime capabilities (`projectProfile.runtimeCapabilities`) and follow `workflowRules.fallbackPolicy`.
 
 ## Agent Phases
 
-1. **Discovery** — explore codebase, find config, understand stack
-2. **Clarification** — ask user targeted questions
-3. **Documentation** — generate CLAUDE.md and docs/
-4. **Template Customization** — fill templates, get approval, write to .claude/
+1. **Discovery** — inspect stack/tooling/config and confirm findings
+2. **Clarification** — ask targeted, stack-derived policy questions
+3. **Documentation and Rules** — generate target-specific guidance outputs
+4. **Template Customization** — customize approved templates and write outputs
 
 ## Editing Guidelines
 
-- Keep the agent interactive — it should never auto-apply without confirmation
-- Templates should be stack-agnostic with commented examples
-- Don't hardcode language/framework lists — the agent learns organically
-- Test changes with `claude --plugin-dir .` against sample projects
+- Keep the agent interactive and explicit; do not assume.
+- Preserve legacy command compatibility in `skills/init/SKILL.md`.
+- Keep docs concise and non-generic.
+- Maintain capability-gated outputs (skip irrelevant sections).
+- If adding placeholders or target capabilities, update this file and tests.
+- Validate changes with:
+  - `python3 -m unittest tests.test_contracts`

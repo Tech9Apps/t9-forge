@@ -1,0 +1,15 @@
+{
+  "target": "claude",
+  "instructionsFile": "CLAUDE.md",
+  "rulesOutput": "CLAUDE.md",
+  "skillsDir": ".claude/skills",
+  "hooksDir": ".claude/hooks",
+  "commandsDir": ".claude/commands",
+  "agentsDir": ".claude/agents",
+  "supportsHooks": true,
+  "supportsBrowserAutomation": true,
+  "supportsCookieImport": true,
+  "supportsGitHubPR": true,
+  "supportsRetrospectives": true,
+  "supportsRuntimeArtifacts": true
+}
