@@ -184,6 +184,22 @@ Present an applicability checklist first, then customize approved templates.
 - `review`, `ship`, `browse`, `qa`, `qa-only`, `qa-design-review`
 - `setup-browser-cookies`, `retro`, `document-release`
 
+**Skill templates** (under `.claude/skills/<name>/SKILL.md` when writing outputs; align checklist with **Skills to offer** above):
+- `commit` — Guided conventional commit workflow
+- `test` — Run relevant tests based on changed files
+- `verify` — Full verification chain (build + lint + type-check + tests)
+- `code-review` — Code quality and security review
+- `pr` — Create a PR with description (only when `gh` is available)
+- `fix-issue` — Issue → fix → test → commit → PR (only when `gh` is available)
+- `qa` — Browser-backed QA when runtime allows; structured test authoring path when not (see template)
+- `onboard` — Codebase onboarding: zoom in/out, history, document, opportunities
+- `deep-review` — 8-lens review with severity and structured report
+- `legacy-audit` — Modernization audit: deps, dead code, complexity, coverage gaps
+- `explain-system` — Verified system design document from exploration
+- `walkthrough` — End-to-end feature trace and guided walkthrough
+- `use-library` — Read upstream docs, version check, compatibility before use
+- `context-audit` — Context window usage and optimization
+
 **Hooks to offer (Claude target only):**
 - `format-on-edit`
 - `lint-on-edit`
@@ -229,21 +245,70 @@ Present an applicability checklist first, then customize approved templates.
 - Include include/skip markers with reasons for skipped items
 - Example skipped reasons: missing CLI, unsupported target, too slow for deterministic hook use
 
+**Example checklist (adapt to discovery):**
+
+> Here's what I'd like to set up for your project:
+>
+> **Skills — Core:**
+> - [x] /commit — conventional commit workflow
+> - [x] /test — run relevant tests
+> - [x] /verify — full verification chain
+> - [x] /code-review — code quality review
+> - [ ] /pr — (skipped: `gh` CLI not found)
+> - [ ] /fix-issue — (skipped: `gh` CLI not found)
+>
+> **Skills — QA & Review:**
+> - [x] /qa — browser QA or structured test authoring (see capability gate)
+> - [x] /deep-review — 8-lens code review
+>
+> **Skills — Exploration & Documentation:**
+> - [x] /onboard — codebase onboarding
+> - [x] /explain-system — system design document
+> - [x] /walkthrough — feature code walkthrough
+>
+> **Skills — Maintenance:**
+> - [x] /legacy-audit — modernization audit
+> - [x] /use-library — safe library usage
+> - [x] /context-audit — context window optimization
+>
+> **Hooks:**
+> - [x] format-on-edit — auto-format with prettier
+> - [x] validate-bash — warn before dangerous commands
+> - [x] notify — desktop notification
+> - [ ] lint-on-edit — (skipped: eslint is slow on this project)
+> - [x] pre-commit — lint + format + type-check before commits
+>
+> **Agents:**
+> - [x] security-review — OWASP-focused code review
+>
+> **Commands:**
+> - [x] /healthcheck — project health overview
+> - [x] /logs — view recent logs
+> - [x] /serve — start dev server
+>
+> Let me know if you'd like to add or remove anything, then I'll customize each one.
+
 **Template customization process:**
 1. Read template source from `templates/`
 2. Replace placeholders with discovered project commands/conventions
 3. Present customized output to user
 4. Apply user edits
 5. Write only approved templates
-6. Summarize exactly what was created
+6. Summarize exactly what was created; skip templates that are not relevant to the project/target
+
+**Placeholder reference** (fill from discovery; each template may use a subset):
+- `{{TEST_COMMAND}}` — focused tests (e.g., `npx jest --findRelatedTests`)
+- `{{TEST_ALL_COMMAND}}` — full suite (e.g., `npm test`)
+- `{{LINT_COMMAND}}`, `{{FORMAT_COMMAND}}`, `{{BUILD_COMMAND}}`, `{{TYPECHECK_COMMAND}}`, `{{DEV_SERVER_COMMAND}}`
+- `{{DEPENDENCY_FILE}}`, `{{DEPENDENCY_CHECK_COMMAND}}`, `{{SECURITY_AUDIT_COMMAND}}`, `{{COVERAGE_COMMAND}}`, `{{INSTALL_COMMAND}}`, `{{PACKAGE_INFO_COMMAND}}`, `{{PACKAGE_VERSION_COMMAND}}`
+- `{{CODE_REVIEW_CONVENTIONS}}`, `{{TEST_FILE_PATTERNS}}`, and others as documented per template
 
 **Additional setup steps:**
-7. If `.gitignore` exists, offer to append `.claude/worktrees/` if missing
-8. If user prefers plan-first workflow, offer `.claude/settings.json` with:
-   - `{"permissions": {"defaultMode": "plan"}}`
-9. Set `{{NOTIFY_COMMAND}}` by OS when `notify` hook is enabled:
-   - Linux: `notify-send 'Claude Code' 'Claude Code needs your attention'`
-   - macOS: `osascript -e 'display notification "Claude Code needs your attention" with title "Claude Code"'`
+7. If `.gitignore` exists, offer to append `.claude/worktrees/` if missing (parallel worktrees / sessions)
+8. If the user prefers plan-first workflow (from Phase 2), offer `.claude/settings.json` with `{"permissions": {"defaultMode": "plan"}}`
+9. When `notify` hook is enabled, set `{{NOTIFY_COMMAND}}` from Phase 1 OS detection:
+   - **Linux:** `notify-send 'Claude Code' 'Claude Code needs your attention'`
+   - **macOS:** `osascript -e 'display notification "Claude Code needs your attention" with title "Claude Code"'`
 
 **Do NOT:**
 - Write any file without user approval
