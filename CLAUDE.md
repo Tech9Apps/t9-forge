@@ -78,11 +78,11 @@ Rules-render placeholders:
 
 Full workflow set expected in generated templates:
 
-- Planning: `plan`, `plan-verify`, `plan-ceo-review`, `plan-eng-review`, `plan-design-review`
-- Quality and release: `review`, `ship`, `qa`, `qa-only`, `qa-design-review`, `browse`, `setup-browser-cookies`
+- Planning: `plan`, `plan-verify`, `plan-ceo-review`, `plan-design-review`
+- Quality and release: `ship`, `qa`, `qa-design-review`
 - Documentation and learning: `document-release`, `retro`
 
-Runtime-backed workflows (`browse`, `qa*`, `setup-browser-cookies`, parts of `ship`) must degrade gracefully when capabilities are missing.
+Runtime-backed workflows (`qa`, `qa-design-review`, parts of `ship`) must degrade gracefully when capabilities are missing.
 
 ## Target Capability Flags
 
@@ -90,7 +90,6 @@ Target definitions in `config/targets/*.json` should include:
 
 - `supportsHooks`
 - `supportsBrowserAutomation`
-- `supportsCookieImport`
 - `supportsGitHubPR`
 - `supportsRetrospectives`
 - `supportsRuntimeArtifacts`

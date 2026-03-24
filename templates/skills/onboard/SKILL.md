@@ -34,9 +34,23 @@ Wait for user confirmation before proceeding.
 - Microservices (multiple services, API gateways)
 - Monorepo (apps, packages, workspace config)
 
-**Data model:** Read schema source of truth. Identify 3-5 core entities and their relationships.
+**Data model:** Read schema source of truth. Identify 3-5 core entities and their relationships (validations, constraints, foreign keys).
 
-**Present:** stack + versions, architectural shape, core entities, directory map, external integrations.
+**C4-depth mapping (when `--deep` or full system doc is requested):**
+
+Map at three zoom levels:
+- **Context** — actors, user types, external APIs consumed/exposed, other internal systems
+- **Container** — web app, workers, databases, cache, queues, CDN/storage
+- **Component** — trace 2-3 primary flows through internal components, sync vs async boundaries
+
+**Trade-off analysis** — for each major architectural choice:
+- What does this optimize for? (speed, scale, simplicity, reliability)
+- What does it sacrifice?
+- Tag confidence: VERIFIED (from code/docs), INFERRED (from patterns), UNCERTAIN (needs user input)
+
+Check for ADRs in `docs/adr/` or `docs/decisions/`.
+
+**Present:** stack + versions, architectural shape, core entities, directory map, external integrations. If deep mode, include C4 map and trade-off analysis.
 
 Wait for user confirmation before proceeding.
 
@@ -64,7 +78,10 @@ Generate lightweight docs that help both humans and AI agents:
 
 - `docs/ARCHITECTURE.md` (40-80 lines) — system overview, stack, core entities, directory map, key patterns
 - `docs/CODEBASE_MAP.md` (30-60 lines) — module inventory, external integrations, testing landscape
+- `docs/SYSTEM_DESIGN.md` (100-200 lines, deep mode only) — problem statement, C4 levels, architectural decisions with confidence tags, trade-off map, data flows with file:line references
 - Proposed CLAUDE.md updates (as a diff — do NOT auto-write)
+
+**Writing rules for SYSTEM_DESIGN.md:** explain WHY not WHAT, include file:line references, no undefined jargon, tag INFERRED claims. Gate: all UNCERTAIN claims must be resolved or marked before writing.
 
 Present all docs for review. Only write files after approval.
 

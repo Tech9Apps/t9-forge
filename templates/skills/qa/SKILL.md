@@ -15,7 +15,9 @@ Pick **Path A** when browser automation is present and you need interactive or U
 
 ### 2. Capability gate
 - Requires browser automation runtime.
-- If unavailable, switch to **Path B** (or `/qa-only` for report-only browser plans).
+- If session cookies are needed for authenticated flows, import them first (never print cookie values; report only domain-level import counts).
+- If `--report-only` is specified, execute checks but do not edit files or apply patches — output findings only.
+- If browser automation is unavailable, switch to **Path B**.
 
 ### 3. Build test scope
 - Identify changed routes/pages from git diff when possible.

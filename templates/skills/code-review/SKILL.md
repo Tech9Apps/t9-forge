@@ -6,7 +6,9 @@ Review code for quality, security, performance, and readability.
 
 ### 1. Identify Scope
 
-If $ARGUMENTS specifies files or a PR, review those. Otherwise, review uncommitted changes:
+If $ARGUMENTS specifies files or a PR, review those. If reviewing a branch for merge readiness, scope to `git diff main...HEAD` (or equivalent base branch).
+
+Otherwise, review uncommitted changes:
 
 ```bash
 git diff --name-only
@@ -60,5 +62,12 @@ For each finding, include:
 - What the issue is
 - Why it matters
 - Suggested fix (with code if helpful)
+
+### 4. Ship Decision (when reviewing a branch)
+
+If scope is a branch diff or PR, end with a clear verdict:
+- **READY** — no blocking issues
+- **READY WITH FIXES** — minor issues listed, none blocking
+- **NOT READY** — blocking issues must be resolved first
 
 $ARGUMENTS

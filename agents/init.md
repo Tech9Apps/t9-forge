@@ -179,23 +179,22 @@ Present an applicability checklist first, then customize approved templates.
 
 **Skills to offer:**
 - `commit`, `test`, `verify`, `code-review`, `pr`, `fix-issue`
-- `plan`, `plan-verify`, `test-generate`, `release-readiness`
-- `plan-ceo-review`, `plan-eng-review`, `plan-design-review`
-- `review`, `ship`, `browse`, `qa`, `qa-only`, `qa-design-review`
-- `setup-browser-cookies`, `retro`, `document-release`
+- `plan`, `plan-verify`, `test-generate`
+- `plan-ceo-review`, `plan-design-review`
+- `ship`, `qa`, `qa-design-review`
+- `retro`, `document-release`
 
 **Skill templates** (under `.claude/skills/<name>/SKILL.md` when writing outputs; align checklist with **Skills to offer** above):
 - `commit` — Guided conventional commit workflow
 - `test` — Run relevant tests based on changed files
 - `verify` — Full verification chain (build + lint + type-check + tests)
-- `code-review` — Code quality and security review
+- `code-review` — Code quality and security review (includes ship-decision verdict for branch reviews)
 - `pr` — Create a PR with description (only when `gh` is available)
 - `fix-issue` — Issue → fix → test → commit → PR (only when `gh` is available)
-- `qa` — Browser-backed QA when runtime allows; structured test authoring path when not (see template)
-- `onboard` — Codebase onboarding: zoom in/out, history, document, opportunities
+- `qa` — Browser-backed QA or structured test authoring; supports `--report-only` for no-edit mode
+- `onboard` — Codebase onboarding: zoom in/out, history, document, opportunities; `--deep` mode for C4 system design docs
 - `deep-review` — 8-lens review with severity and structured report
 - `legacy-audit` — Modernization audit: deps, dead code, complexity, coverage gaps
-- `explain-system` — Verified system design document from exploration
 - `walkthrough` — End-to-end feature trace and guided walkthrough
 - `use-library` — Read upstream docs, version check, compatibility before use
 - `context-audit` — Context window usage and optimization
@@ -216,8 +215,6 @@ Present an applicability checklist first, then customize approved templates.
 **Commands to offer:**
 - `healthcheck`, `logs`, `serve`
 - `deploy-status`, `rollback-status`
-- runtime-backed observability commands where applicable:
-  - `browse-status`, `qa-status`, `design-audit-status`, `retro-compare`
 
 **Agents to offer (Claude target only):**
 - `security-review`
@@ -229,9 +226,8 @@ Present an applicability checklist first, then customize approved templates.
 - For projects with typecheck, set `{{TYPECHECK_CHAIN}}` to ` && {{TYPECHECK_COMMAND}}`
 - Testing sections/layers must be capability-gated (no filler N/A sections)
 - Classify workflows as `portable` vs `runtime-backed` and gate output accordingly
-- Runtime-backed workflows (`browse`, `qa`, `qa-only`, `qa-design-review`, `setup-browser-cookies`) require browser capability checks
-- `setup-browser-cookies` should be disabled or downgraded when platform does not support secure cookie import
-- `ship` and `review` should degrade to local-only mode when PR tooling is unavailable
+- Runtime-backed workflows (`qa`, `qa-design-review`) require browser capability checks
+- `ship` should degrade to local-only mode when PR tooling is unavailable; supports `--dry-run` for assessment-only
 - `retro` should degrade gracefully if commit history is insufficient
 - For Cursor target, express browser-backed behavior through Cursor browser tooling/rules guidance rather than Claude-specific shell assumptions
 - For Claude target, allow runtime artifacts and command workflows under `.claude/*` when approved
@@ -258,12 +254,11 @@ Present an applicability checklist first, then customize approved templates.
 > - [ ] /fix-issue — (skipped: `gh` CLI not found)
 >
 > **Skills — QA & Review:**
-> - [x] /qa — browser QA or structured test authoring (see capability gate)
+> - [x] /qa — browser QA or structured test authoring (supports --report-only)
 > - [x] /deep-review — 8-lens code review
 >
 > **Skills — Exploration & Documentation:**
-> - [x] /onboard — codebase onboarding
-> - [x] /explain-system — system design document
+> - [x] /onboard — codebase onboarding (--deep for system design doc)
 > - [x] /walkthrough — feature code walkthrough
 >
 > **Skills — Maintenance:**

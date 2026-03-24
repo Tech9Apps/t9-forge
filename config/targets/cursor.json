@@ -8,7 +8,6 @@
   "agentsDir": null,
   "supportsHooks": false,
   "supportsBrowserAutomation": true,
-  "supportsCookieImport": false,
   "supportsGitHubPR": true,
   "supportsRetrospectives": true,
   "supportsRuntimeArtifacts": false

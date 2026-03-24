@@ -8,7 +8,6 @@
   "agentsDir": ".claude/agents",
   "supportsHooks": true,
   "supportsBrowserAutomation": true,
-  "supportsCookieImport": true,
   "supportsGitHubPR": true,
   "supportsRetrospectives": true,
   "supportsRuntimeArtifacts": true

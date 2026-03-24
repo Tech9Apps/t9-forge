@@ -35,8 +35,6 @@ class ToolkitContractsTest(unittest.TestCase):
         self.assertFalse(cursor["supportsHooks"])
         self.assertTrue(claude["supportsBrowserAutomation"])
         self.assertTrue(cursor["supportsBrowserAutomation"])
-        self.assertTrue(claude["supportsCookieImport"])
-        self.assertFalse(cursor["supportsCookieImport"])
         self.assertTrue(claude["supportsGitHubPR"])
         self.assertTrue(cursor["supportsGitHubPR"])
         self.assertTrue(claude["supportsRuntimeArtifacts"])
@@ -67,17 +65,11 @@ class ToolkitContractsTest(unittest.TestCase):
             "plan",
             "plan-verify",
             "test-generate",
-            "release-readiness",
             "plan-ceo-review",
-            "plan-eng-review",
             "plan-design-review",
-            "review",
             "ship",
-            "browse",
             "qa",
-            "qa-only",
             "qa-design-review",
-            "setup-browser-cookies",
             "retro",
             "document-release",
         ]
@@ -92,10 +84,6 @@ class ToolkitContractsTest(unittest.TestCase):
             "serve.md",
             "deploy-status.md",
             "rollback-status.md",
-            "browse-status.md",
-            "qa-status.md",
-            "design-audit-status.md",
-            "retro-compare.md",
         ]
         for name in required_commands:
             path = ROOT / "templates" / "commands" / name

@@ -107,7 +107,7 @@ Customizes templates with project-specific commands and conventions, then writes
 
 **Skills:**
 - `/commit`, `/test`, `/verify`, `/code-review`, `/pr`, `/fix-issue`
-- `/plan`, `/plan-verify`, `/test-generate`, `/release-readiness`
+- `/plan`, `/plan-verify`, `/test-generate`
 
 **Hooks (Claude target):**
 - format-on-edit
@@ -144,9 +144,8 @@ Note: Cursor target currently focuses on rules/guidance outputs, not `.claude/*`
 
 Generated workflow coverage now includes:
 
-- Planning: `/plan`, `/plan-verify`, `/plan-ceo-review`, `/plan-eng-review`, `/plan-design-review`
-- Quality and release: `/review`, `/ship`, `/qa`, `/qa-only`, `/qa-design-review`
-- Runtime/session: `/browse`, `/setup-browser-cookies`
+- Planning: `/plan`, `/plan-verify`, `/plan-ceo-review`, `/plan-design-review`
+- Quality and release: `/ship`, `/qa`, `/qa-design-review`
 - Documentation and learning: `/document-release`, `/retro`
 
 ## Runtime Dependency Matrix
@@ -156,20 +155,17 @@ Portable workflows (prompt-only) are available across targets:
 - `/plan`
 - `/plan-verify`
 - `/plan-ceo-review`
-- `/plan-eng-review`
 - `/plan-design-review`
-- `/review`
 - `/document-release`
 - `/retro`
 
 Runtime-backed workflows require discovered capabilities:
 
-- Browser-backed: `/browse`, `/qa`, `/qa-only`, `/qa-design-review`
+- Browser-backed: `/qa`, `/qa-design-review`
   - requires browser automation backend
-- Session import: `/setup-browser-cookies`
-  - requires secure cookie import support (typically macOS Keychain path)
 - Release automation: `/ship`
   - can run local-only; PR automation requires GitHub tooling
+  - supports `--dry-run` for assessment-only mode
 
 ## Target Capability Mapping
 
@@ -177,7 +173,6 @@ Runtime-backed workflows require discovered capabilities:
 
 - `supportsHooks`
 - `supportsBrowserAutomation`
-- `supportsCookieImport`
 - `supportsGitHubPR`
 - `supportsRetrospectives`
 - `supportsRuntimeArtifacts`
@@ -332,7 +327,6 @@ Generated skill set includes:
 - `/plan`
 - `/plan-verify` (mandatory planning quality gate)
 - `/test-generate`
-- `/release-readiness`
 
 Generated command set includes:
 - `/healthcheck`
