@@ -64,7 +64,6 @@ class ToolkitContractsTest(unittest.TestCase):
         required_templates = [
             "plan",
             "plan-verify",
-            "test-generate",
             "plan-ceo-review",
             "plan-design-review",
             "ship",

@@ -107,7 +107,7 @@ Customizes templates with project-specific commands and conventions, then writes
 
 **Skills:**
 - `/commit`, `/test`, `/verify`, `/code-review`, `/pr`, `/fix-issue`
-- `/plan`, `/plan-verify`, `/test-generate`
+- `/plan`, `/plan-verify`
 
 **Hooks (Claude target):**
 - format-on-edit
@@ -326,7 +326,6 @@ The agent never writes files without approval.
 Generated skill set includes:
 - `/plan`
 - `/plan-verify` (mandatory planning quality gate)
-- `/test-generate`
 
 Generated command set includes:
 - `/healthcheck`

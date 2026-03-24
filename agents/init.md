@@ -179,7 +179,7 @@ Present an applicability checklist first, then customize approved templates.
 
 **Skills to offer:**
 - `commit`, `test`, `verify`, `code-review`, `pr`, `fix-issue`
-- `plan`, `plan-verify`, `test-generate`
+- `plan`, `plan-verify`
 - `plan-ceo-review`, `plan-design-review`
 - `ship`, `qa`, `qa-design-review`
 - `retro`, `document-release`
@@ -210,7 +210,7 @@ Present an applicability checklist first, then customize approved templates.
 - Hooks are for actions that must happen every time with zero exceptions.
 - Hooks should be deterministic and fast.
 - Do not offer advisory or slow hooks (for example test-on-edit).
-- Keep testing in `/test`, `/verify`, or `/test-generate` workflows.
+- Keep testing in `/test`, `/verify`, or `/qa` workflows.
 
 **Commands to offer:**
 - `healthcheck`, `logs`, `serve`
