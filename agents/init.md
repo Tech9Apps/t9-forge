@@ -135,6 +135,9 @@ Skills (in `.claude/skills/`):
 - `use-library/SKILL.md` — Read library docs before using it: fetch docs, check version, verify compatibility
 - `context-audit/SKILL.md` — Audit context window usage and find optimization opportunities
 
+Skills — Writing:
+- `english-humanizer/SKILL.md` — Detect and remove AI-generated writing patterns from text (includes `pattern-library.md`)
+
 Hooks (in `.claude/hooks/`):
 - `lint-on-edit.json` — Auto-lint after file edits (only offer when the linter is fast and deterministic)
 - `format-on-edit.json` — Auto-format after file edits (only offer when the formatter is fast and deterministic)
@@ -177,6 +180,9 @@ Commands (in `.claude/commands/`):
 > - [x] /legacy-audit — modernization audit
 > - [x] /use-library — safe library usage
 > - [x] /context-audit — context window optimization
+>
+> **Skills — Writing:**
+> - [x] /english-humanizer — detect and remove AI writing patterns
 >
 > **Hooks:**
 > - [x] format-on-edit — auto-format with prettier

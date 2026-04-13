@@ -85,6 +85,9 @@ Copies and customizes templates into your `.claude/` directory:
 - `/test` — Run relevant tests based on changes
 - `/code-review` — Code quality and security review
 
+**Skills — Writing:**
+- `/english-humanizer` — Detect and remove AI-generated writing patterns from text
+
 **Hooks:**
 - Lint on edit — auto-lint after file changes
 - Test on edit — auto-run related tests after file changes
