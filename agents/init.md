@@ -62,6 +62,8 @@ Ask the user targeted questions based on what you discovered. Tailor questions t
 - PR workflow — do they use `gh pr create`? Any PR description conventions or templates?
 
 **Ask when relevant:**
+- Where to store design specs and implementation plans (e.g., `docs/specs/`, `docs/plans/`) — needed if offering brainstorming or writing-plans skills
+- Whether the team uses git worktrees for parallel work, and preferred worktree location
 - Architecture decisions that aren't obvious from the code
 - Which parts of the codebase are most actively developed
 - Any areas where Claude should be especially careful
@@ -135,6 +137,15 @@ Skills (in `.claude/skills/`):
 - `use-library/SKILL.md` — Read library docs before using it: fetch docs, check version, verify compatibility
 - `context-audit/SKILL.md` — Audit context window usage and find optimization opportunities
 
+Skills — Workflow & Process:
+- `verification-before-completion/SKILL.md` — Require fresh verification evidence before claiming completion
+- `test-driven-development/SKILL.md` — Red-Green-Refactor TDD cycle with Iron Law enforcement (includes `testing-anti-patterns.md`)
+- `systematic-debugging/SKILL.md` — Root-cause debugging process: investigate before fixing (includes `root-cause-tracing.md`, `defense-in-depth.md`, `condition-based-waiting.md`)
+- `brainstorming/SKILL.md` — Collaborative design dialogue before implementation (includes `spec-reviewer-prompt.md`)
+- `writing-plans/SKILL.md` — Bite-sized implementation plans with exact code and no placeholders (includes `plan-reviewer-prompt.md`)
+- `subagent-dev/SKILL.md` — Fresh subagent per task with two-stage review: spec compliance then code quality (includes `implementer-prompt.md`, `spec-reviewer-prompt.md`, `code-quality-reviewer-prompt.md`)
+- `using-git-worktrees/SKILL.md` — Isolated git worktrees with directory selection and safety verification
+
 Hooks (in `.claude/hooks/`):
 - `lint-on-edit.json` — Auto-lint after file edits (only offer when the linter is fast and deterministic)
 - `format-on-edit.json` — Auto-format after file edits (only offer when the formatter is fast and deterministic)
@@ -178,6 +189,15 @@ Commands (in `.claude/commands/`):
 > - [x] /use-library — safe library usage
 > - [x] /context-audit — context window optimization
 >
+> **Skills — Workflow & Process:**
+> - [x] /verification-before-completion — verify before claiming done
+> - [x] /test-driven-development — TDD Red-Green-Refactor cycle
+> - [x] /systematic-debugging — root-cause debugging process
+> - [x] /brainstorming — collaborative design before implementation
+> - [x] /writing-plans — bite-sized implementation plans
+> - [x] /subagent-dev — subagent-per-task with two-stage review
+> - [x] /using-git-worktrees — isolated worktree workspaces
+>
 > **Hooks:**
 > - [x] format-on-edit — auto-format with prettier
 > - [x] validate-bash — warn before dangerous commands
@@ -216,17 +236,21 @@ Wait for the user to confirm before proceeding with customization.
    - `{{PACKAGE_VERSION_COMMAND}}` → command to check latest version (e.g., `npm view $ARGUMENTS version`)
    - `{{CODE_REVIEW_CONVENTIONS}}` → project-specific code review conventions
    - `{{TEST_FILE_PATTERNS}}` → how test files map to source files
+   - `{{SPEC_LOCATION}}` → where design specs are stored (e.g., `docs/specs/`)
+   - `{{PLAN_LOCATION}}` → where implementation plans are stored (e.g., `docs/plans/`)
+   - `{{WORKTREE_LOCATION}}` → where git worktrees are created (e.g., `.worktrees/`)
    - Other placeholders as documented in each template
-3. Present each customized template to the user
-4. Only write files the user approves
-5. After processing all approved templates, confirm to the user that setup is complete and list everything that was created.
-6. Skip templates that aren't relevant to the project
+3. When copying skills with supporting files (subagent prompts, reference docs), copy the entire skill directory, not just SKILL.md
+4. Present each customized template to the user
+5. Only write files the user approves
+6. After processing all approved templates, confirm to the user that setup is complete and list everything that was created.
+7. Skip templates that aren't relevant to the project
 
 **Additional steps:**
 
-7. If the project has a `.gitignore`, offer to append `.claude/worktrees/` if it isn't already listed (supports parallel Claude sessions with git worktrees)
-8. If the user indicated they prefer a plan-first workflow in Phase 2, offer to create `.claude/settings.json` with `{"permissions": {"defaultMode": "plan"}}`
-9. For the notification hook, fill `{{NOTIFY_COMMAND}}` based on OS detected in Phase 1:
+8. If the project has a `.gitignore`, offer to append `.claude/worktrees/` if it isn't already listed (supports parallel Claude sessions with git worktrees)
+9. If the user indicated they prefer a plan-first workflow in Phase 2, offer to create `.claude/settings.json` with `{"permissions": {"defaultMode": "plan"}}`
+10. For the notification hook, fill `{{NOTIFY_COMMAND}}` based on OS detected in Phase 1:
    - **Linux**: `notify-send 'Claude Code' 'Claude Code needs your attention'`
    - **macOS**: `osascript -e 'display notification "Claude Code needs your attention" with title "Claude Code"'`
 

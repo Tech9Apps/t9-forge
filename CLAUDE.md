@@ -43,6 +43,9 @@ Common placeholders used across templates:
 - `{{VERIFY_COMMAND}}` — project's full verification chain
 - `{{PR_CONVENTIONS}}` — team's PR description conventions
 - `{{NOTIFY_COMMAND}}` — OS-appropriate desktop notification command
+- `{{SPEC_LOCATION}}` — where design specs are stored (e.g., `docs/specs/`)
+- `{{PLAN_LOCATION}}` — where implementation plans are stored (e.g., `docs/plans/`)
+- `{{WORKTREE_LOCATION}}` — where git worktrees are created (e.g., `.worktrees/`)
 
 ## Agent Phases
 

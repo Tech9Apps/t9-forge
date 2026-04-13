@@ -80,10 +80,19 @@ All documentation uses `@`-references for cross-linking. Only files with real co
 
 Copies and customizes templates into your `.claude/` directory:
 
-**Skills:**
+**Skills — Core:**
 - `/commit` — Guided conventional commit workflow
 - `/test` — Run relevant tests based on changes
 - `/code-review` — Code quality and security review
+
+**Skills — Workflow & Process:**
+- `/verification-before-completion` — Require fresh verification evidence before claiming completion
+- `/test-driven-development` — Red-Green-Refactor TDD cycle with Iron Law enforcement
+- `/systematic-debugging` — Root-cause debugging: investigate before fixing, verify before claiming
+- `/brainstorming` — Collaborative design dialogue before implementation
+- `/writing-plans` — Bite-sized implementation plans with exact code and no placeholders
+- `/subagent-dev` — Fresh subagent per task with two-stage review (spec compliance + code quality)
+- `/using-git-worktrees` — Isolated git worktrees with directory selection and safety verification
 
 **Hooks:**
 - Lint on edit — auto-lint after file changes
