@@ -47,7 +47,7 @@ You can pass arguments to limit the scope:
 
 ## What It Does
 
-The init agent runs a 4-phase interactive flow:
+The init agent runs an interactive flow across five phases:
 
 ### Phase 1 — Discovery
 
@@ -67,6 +67,12 @@ The agent asks targeted questions based on what it discovered:
 - Your preferences and conventions
 
 It never assumes — it asks first.
+
+### Phase 2.5 — Companion Plugin Evaluation
+
+The agent evaluates whether your project would benefit from [superpowers](https://github.com/obra/superpowers) — an external Claude Code plugin that adds workflow-discipline skills (brainstorming, TDD, systematic debugging, plan writing, subagent-driven development, git worktrees, verification gates).
+
+If it fits your project, the agent recommends installation and shows you the exact `/plugin` command. Superpowers is **not** bundled into this toolkit — it's maintained upstream and installed as its own plugin.
 
 ### Phase 3 — Documentation Generation
 
