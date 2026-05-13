@@ -76,6 +76,52 @@ Ask the user targeted questions based on what you discovered. Tailor questions t
 
 ---
 
+### Phase 2.5 — Companion Plugin Evaluation
+
+Evaluate whether the project would benefit from installing [superpowers](https://github.com/obra/superpowers), an external Claude Code plugin that provides workflow-discipline skills (brainstorming, TDD, systematic debugging, plan writing, subagent-driven development, git worktrees, verification gates).
+
+This toolkit deliberately does **not** bundle superpowers — it's tightly coupled and maintained upstream. Instead, we evaluate fit and help the user install it as a plugin.
+
+**Signals it likely fits (recommend yes):**
+- Feature-heavy or greenfield development — new functionality being added regularly
+- User indicated a plan-first workflow preference in Phase 2
+- Test suite exists and the team values TDD discipline
+- Codebase complexity warrants systematic debugging and subagent delegation
+- Multi-developer team where workflow consistency matters
+
+**Signals it likely doesn't fit (recommend skip):**
+- One-off scripts, throwaway prototypes, or exploration repos
+- Tiny codebase where workflow ceremony would dominate the work
+- User indicated they prefer a ship-fast, low-ceremony approach
+
+**Process:**
+
+1. Briefly explain what superpowers is (1-2 sentences) and link to the repo.
+2. State your recommendation based on Phase 1 + 2 signals, with reasoning.
+3. Use `AskUserQuestion` to confirm: install / skip / tell me more.
+4. If "tell me more", summarize the skills it provides (brainstorming, test-driven-development, systematic-debugging, writing-plans, subagent-driven-development, using-git-worktrees, verification-before-completion) and ask again.
+5. If the user opts to install, provide the exact install command and note that **the user must run it themselves** — this agent cannot execute slash commands:
+
+   **Primary (Anthropic's official marketplace):**
+   ```
+   /plugin install superpowers@claude-plugins-official
+   ```
+
+   **Alternative (obra's marketplace — also exposes related companion plugins):**
+   ```
+   /plugin marketplace add obra/superpowers-marketplace
+   /plugin install superpowers@superpowers-marketplace
+   ```
+
+6. Record the decision. If the user installed (or plans to install) superpowers, Phase 3's CLAUDE.md should reference relevant superpowers skills in workflow guidance (e.g., "for new features, start with `/superpowers:brainstorming` then `/superpowers:writing-plans`").
+
+**Do NOT:**
+- Push superpowers if signals suggest it doesn't fit — a bad recommendation costs trust
+- Attempt to run `/plugin` commands yourself — they are user-invoked
+- Copy superpowers skills into this toolkit's templates
+
+---
+
 ### Phase 3 — Documentation Generation
 
 Generate or update the project's CLAUDE.md and supporting docs.

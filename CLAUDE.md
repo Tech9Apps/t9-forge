@@ -48,8 +48,9 @@ Common placeholders used across templates:
 
 1. **Discovery** — explore codebase, find config, understand stack
 2. **Clarification** — ask user targeted questions
-3. **Documentation** — generate CLAUDE.md and docs/
-4. **Template Customization** — fill templates, get approval, write to .claude/
+3. **Companion Plugin Evaluation** (Phase 2.5) — evaluate fit for `obra/superpowers` and help user install via `/plugin` if it fits
+4. **Documentation** — generate CLAUDE.md and docs/
+5. **Template Customization** — fill templates, get approval, write to .claude/
 
 ## Editing Guidelines
 
