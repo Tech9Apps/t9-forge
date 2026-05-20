@@ -1,12 +1,12 @@
 # Contributing to t9-forge
 
-t9-forge is a Claude Code plugin maintained by Tech9. Contributions from Tech9 team members are welcome.
+t9-forge is a plugin for AI Coding Assistants (e.g. Claude Code) maintained by Tech9. Contributions from Tech9 team members are welcome.
 
 ## Before you start
 
 Open a GitHub issue (or post in `#t9-forge` on Slack) describing what you want to change. This lets us align on scope before you write code — especially important for new templates or agent behavior, where there's often a question of whether something belongs in the toolkit at all.
 
-## Local development
+## Local development for Claude Code
 
 Clone the repo and point Claude Code at it:
 
