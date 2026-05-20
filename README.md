@@ -107,7 +107,4 @@ Each template is customized with your project's actual commands and conventions.
 
 ## Contributing
 
-1. Templates use `{{PLACEHOLDER}}` syntax for values filled in by the agent
-2. Include HTML comments with examples for common stacks
-3. Keep templates language/framework agnostic
-4. Test with `claude --plugin-dir .` against diverse projects
+See [CONTRIBUTING.md](CONTRIBUTING.md).
