@@ -5,8 +5,8 @@
     {
       "name": "t9-forge",
       "source": {
-        "source": "github",
-        "repo": "Tech9Apps/t9-forge"
+        "source": "url",
+        "url": "https://github.com/Tech9Apps/t9-forge.git"
       },
       "description": "Interactive agent that initializes projects for Claude Code"
     }
