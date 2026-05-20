@@ -1,5 +1,0 @@
-{
-  "event": "Notification",
-  "command": "{{NOTIFY_COMMAND}}",
-  "description": "Desktop notification when Claude needs attention"
-}

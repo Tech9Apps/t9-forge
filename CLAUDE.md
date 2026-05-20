@@ -17,7 +17,7 @@ agents/init.md                — Main interactive agent (4-phase flow)
 skills/init/SKILL.md          — Entry point skill
 templates/
   skills/                     — Template skills (commit, test, code-review, pr, fix-issue)
-  hooks/                      — Template hooks (lint, format, validate, pre-commit, notify)
+  hooks/                      — Template hooks (lint, format, validate, pre-commit)
   commands/                   — Template commands (healthcheck, logs, serve)
   docs/                       — Template doc files (architecture, api, testing)
 ```
@@ -42,7 +42,6 @@ Common placeholders used across templates:
 - `{{PROJECT_NAME}}` — project name
 - `{{VERIFY_COMMAND}}` — project's full verification chain
 - `{{PR_CONVENTIONS}}` — team's PR description conventions
-- `{{NOTIFY_COMMAND}}` — OS-appropriate desktop notification command
 
 ## Agent Phases
 
