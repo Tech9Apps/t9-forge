@@ -1,4 +1,4 @@
-# /claude-code-toolkit:init
+# /t9-forge:init
 
 Initialize this project for Claude Code. Evaluates the codebase, generates CLAUDE.md and docs, and sets up customized skills, hooks, and commands.
 

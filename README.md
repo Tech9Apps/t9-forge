@@ -1,27 +1,20 @@
-# claude-code-toolkit
+# t9-forge
 
 A Claude Code plugin that interactively initializes projects for Claude Code. It evaluates your codebase, generates a CLAUDE.md file, creates focused documentation, and provides customized skills, hooks, and commands tailored to your project's stack.
 
 ## Installation
 
-### As a project plugin
+Add the marketplace, then install the plugin:
 
-Add to your project's `.claude/plugins.json`:
-
-```json
-{
-  "plugins": [
-    {
-      "path": "/path/to/claude-code-toolkit"
-    }
-  ]
-}
+```
+/plugin marketplace add Tech9Apps/t9-forge
+/plugin install t9-forge@tech9-claude
 ```
 
 ### For development/testing
 
 ```bash
-claude --plugin-dir /path/to/claude-code-toolkit
+claude --plugin-dir /path/to/t9-forge
 ```
 
 ## Usage
@@ -29,7 +22,7 @@ claude --plugin-dir /path/to/claude-code-toolkit
 Run the init skill in any project:
 
 ```
-/claude-code-toolkit:init
+/t9-forge:init
 ```
 
 ### Scoped runs
@@ -37,12 +30,12 @@ Run the init skill in any project:
 You can pass arguments to limit the scope:
 
 ```
-/claude-code-toolkit:init just CLAUDE.md
-/claude-code-toolkit:init full setup
-/claude-code-toolkit:init hooks only
-/claude-code-toolkit:init skills only
-/claude-code-toolkit:init commands only
-/claude-code-toolkit:init update
+/t9-forge:init just CLAUDE.md
+/t9-forge:init full setup
+/t9-forge:init hooks only
+/t9-forge:init skills only
+/t9-forge:init commands only
+/t9-forge:init update
 ```
 
 ## What It Does

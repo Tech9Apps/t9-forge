@@ -1,4 +1,4 @@
-# claude-code-toolkit
+# t9-forge
 
 A Claude Code plugin that initializes projects for optimal Claude Code usage.
 
@@ -6,7 +6,7 @@ A Claude Code plugin that initializes projects for optimal Claude Code usage.
 
 This is a Claude Code plugin — not a standalone application. It provides:
 - A sub agent (`agents/init.md`) that interactively evaluates codebases
-- A skill (`/claude-code-toolkit:init`) as the user entry point
+- A skill (`/t9-forge:init`) as the user entry point
 - Template files that get customized and copied into target projects
 
 ## Project Structure
