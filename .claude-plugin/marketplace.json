@@ -4,9 +4,11 @@
   "plugins": [
     {
       "name": "t9-forge",
-      "source": ".",
-      "description": "Interactive agent that initializes projects for Claude Code",
-      "version": "1.0.0"
+      "source": {
+        "source": "github",
+        "repo": "Tech9Apps/t9-forge"
+      },
+      "description": "Interactive agent that initializes projects for Claude Code"
     }
   ]
 }
