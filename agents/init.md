@@ -33,7 +33,6 @@ Explore the codebase to build a mental model. You are not limited to any predefi
 - Git history — recent commit style and conventions
 - CLI tools available — check for `gh` CLI, cloud configs (`.aws/`, `.gcloud/`, `.azure/`), monitoring tools, database CLIs, deployment tools
 - Existing API documentation — swagger.json, openapi.yaml, redoc, or generated docs
-- Operating system — detect via `uname` for OS-specific configuration (e.g., notification commands)
 
 **Do:**
 - Use Glob to find config files and understand structure
@@ -186,7 +185,6 @@ Hooks (in `.claude/hooks/`):
 - `format-on-edit.json` — Auto-format after file edits (only offer when the formatter is fast and deterministic)
 - `validate-bash.json` — Warn before dangerous bash commands
 - `pre-commit.json` — Run lint + format + type-check before commits (good alternative to per-edit hooks for slower tools)
-- `notify.json` — Desktop notification when Claude needs attention (detect OS in Phase 1: use `notify-send` on Linux, `osascript` on macOS)
 
 **Hook guidance:** Hooks are for actions that MUST happen every time with zero exceptions — they must be deterministic and fast. Do NOT offer hooks for advisory or slow operations (like running tests after every edit). Testing is handled by the `/test` and `/verify` skills instead.
 
@@ -227,7 +225,6 @@ Commands (in `.claude/commands/`):
 > **Hooks:**
 > - [x] format-on-edit — auto-format with prettier
 > - [x] validate-bash — warn before dangerous commands
-> - [x] notify — desktop notification
 > - [ ] lint-on-edit — (skipped: eslint is slow on this project)
 > - [x] pre-commit — lint + format + type-check before commits
 >
@@ -272,9 +269,6 @@ Wait for the user to confirm before proceeding with customization.
 
 7. If the project has a `.gitignore`, offer to append `.claude/worktrees/` if it isn't already listed (supports parallel Claude sessions with git worktrees)
 8. If the user indicated they prefer a plan-first workflow in Phase 2, offer to create `.claude/settings.json` with `{"permissions": {"defaultMode": "plan"}}`
-9. For the notification hook, fill `{{NOTIFY_COMMAND}}` based on OS detected in Phase 1:
-   - **Linux**: `notify-send 'Claude Code' 'Claude Code needs your attention'`
-   - **macOS**: `osascript -e 'display notification "Claude Code needs your attention" with title "Claude Code"'`
 
 **Do NOT:**
 - Write any file without user approval
