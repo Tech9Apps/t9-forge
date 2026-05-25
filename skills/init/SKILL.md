@@ -1,10 +1,14 @@
+---
+description: "Initialize this project for Claude Code: evaluate the codebase, generate CLAUDE.md and docs, and set up customized skills, hooks, and commands. Use when starting a new project or refreshing Claude Code configuration."
+user-invocable: true
+argument-hint: "[full setup|just CLAUDE.md|hooks only|skills only|commands only|update]"
+context: fork
+agent: init
+---
+
 # /t9-forge:init
 
 Initialize this project for Claude Code. Evaluates the codebase, generates CLAUDE.md and docs, and sets up customized skills, hooks, and commands.
-
-## Configuration
-- context: fork
-- agent: init
 
 ## Instructions
 

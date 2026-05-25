@@ -1,3 +1,8 @@
+---
+description: "Audit what's consuming your Claude Code context window and find optimization opportunities. Use when context feels bloated, conversations get slow, or before a long session."
+user-invocable: true
+---
+
 # /context-audit
 
 Audit what's consuming your Claude Code context window and find optimization opportunities.

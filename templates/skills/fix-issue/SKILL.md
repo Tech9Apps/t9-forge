@@ -1,3 +1,9 @@
+---
+description: "Fix a GitHub issue end-to-end: read issue, locate code, implement fix, verify, commit, and open PR. Use when the user says 'fix issue #N' or wants to work through a specific GitHub issue. Requires gh CLI."
+user-invocable: true
+argument-hint: "<issue-number>"
+---
+
 # /fix-issue
 
 Analyze and fix the GitHub issue: $ARGUMENTS.

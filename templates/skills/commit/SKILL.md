@@ -1,3 +1,8 @@
+---
+description: "Create a well-structured conventional commit for the current changes. Use when the user wants to commit, stage and commit, or asks 'make a commit'."
+user-invocable: true
+---
+
 # /commit
 
 Create a well-structured commit for the current changes.

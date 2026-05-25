@@ -1,3 +1,9 @@
+---
+description: "5-phase QA workflow — reconnaissance, probing questions, test plan, spec writing, execution. Use when the user wants thorough quality assurance on a change, a comprehensive test plan, or rigorous validation before shipping."
+user-invocable: true
+argument-hint: "[file|module]"
+---
+
 # /qa
 
 5-phase quality assurance workflow: reconnaissance, probing questions, test plan, spec writing, execution.

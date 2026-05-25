@@ -1,3 +1,8 @@
+---
+description: "Create a pull request for the current branch. Use when the user wants to open a PR, create a pull request, or push their branch for review. Requires gh CLI."
+user-invocable: true
+---
+
 # /pr
 
 Create a pull request for the current branch.

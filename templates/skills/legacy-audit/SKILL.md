@@ -1,3 +1,9 @@
+---
+description: "Read-only audit of a codebase for modernization opportunities: dependency age, dead code, complexity hotspots, test coverage gaps. Use when planning a refactor or assessing tech debt."
+user-invocable: true
+argument-hint: "[deps|dead-code|complexity|coverage]"
+---
+
 # /legacy-audit
 
 Audit a codebase for modernization opportunities: dependency age, dead code, complexity hotspots, test coverage gaps.

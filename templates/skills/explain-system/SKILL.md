@@ -1,3 +1,8 @@
+---
+description: "Explore a codebase and produce a verified system design document explaining WHY the system is designed the way it is. Use when the user wants a system-level explanation, design rationale, or architectural overview."
+user-invocable: true
+---
+
 # /explain-system
 
 Explore a codebase and write a verified system design document explaining WHY the system is designed the way it is.

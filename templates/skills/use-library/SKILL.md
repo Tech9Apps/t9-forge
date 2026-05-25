@@ -1,3 +1,9 @@
+---
+description: "Read library documentation before using it: fetches docs, checks latest version, verifies compatibility. Use when adding a new dependency or working with an unfamiliar library."
+user-invocable: true
+argument-hint: "<library-name>"
+---
+
 # /use-library
 
 Read library documentation before using it. Fetches docs, checks latest version, verifies compatibility.

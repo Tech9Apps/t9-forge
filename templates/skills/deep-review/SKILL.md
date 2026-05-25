@@ -1,3 +1,9 @@
+---
+description: "8-lens code review (correctness, security, performance, design, tests, docs, conventions, dependencies) with severity-tagged structured report. Use when the user wants a deeper review than /code-review on a PR, file, or recent changes."
+user-invocable: true
+argument-hint: "[file|PR number]"
+---
+
 # /deep-review
 
 8-lens code review with severity levels and structured report.

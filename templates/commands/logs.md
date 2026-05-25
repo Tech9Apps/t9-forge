@@ -1,3 +1,7 @@
+---
+description: "View recent application logs and CI/CD output."
+---
+
 # View Logs
 
 Show recent logs or CI/CD output.
