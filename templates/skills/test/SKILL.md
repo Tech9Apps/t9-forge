@@ -1,3 +1,9 @@
+---
+description: "Run relevant tests based on currently changed files. Use when the user wants to test their changes, run tests, or verify a change before committing."
+user-invocable: true
+argument-hint: "[file|directory|pattern]"
+---
+
 # /test
 
 Run relevant tests based on current changes.

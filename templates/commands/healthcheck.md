@@ -1,3 +1,7 @@
+---
+description: "Project health dashboard: git status, branch state, recent commits, and a quick view of project health."
+---
+
 # Project Status
 
 Show the current state of the project.

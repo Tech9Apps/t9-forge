@@ -1,3 +1,9 @@
+---
+description: "Trace one feature end-to-end — from trigger to database and back — and produce a guided code walkthrough. Use when the user wants a walkthrough of a specific feature or file."
+user-invocable: true
+argument-hint: "<feature-name|file-path>"
+---
+
 # /walkthrough
 
 Trace one feature end-to-end — from trigger to database and back — and produce a guided code walkthrough.

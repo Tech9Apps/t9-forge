@@ -1,3 +1,8 @@
+---
+description: "Systematically explore and document an unfamiliar codebase: zoom in on one flow, then zoom out to patterns, learn history, externalize understanding. Use when starting on a new project or inheriting unfamiliar code."
+user-invocable: true
+---
+
 # /onboard
 
 Systematically explore and document an unfamiliar codebase. Zoom in first, then zoom out, recognize patterns, learn history, externalize understanding.

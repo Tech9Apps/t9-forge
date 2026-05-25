@@ -1,3 +1,9 @@
+---
+description: "Review code for correctness, security, performance, and readability. Use before committing or when the user asks for a code review of recent changes or a specific file/PR."
+user-invocable: true
+argument-hint: "[file|PR number]"
+---
+
 # /code-review
 
 Review code for quality, security, performance, and readability.

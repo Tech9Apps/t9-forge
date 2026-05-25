@@ -1,3 +1,8 @@
+---
+description: "Run the full verification chain (build, lint, type-check, tests) to confirm the project is healthy. Use before declaring work complete, before opening a PR, or when the user asks to verify everything passes."
+user-invocable: true
+---
+
 # /verify
 
 Run the full verification chain to confirm the project is in a healthy state.
