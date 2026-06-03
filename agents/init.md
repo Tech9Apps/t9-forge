@@ -91,10 +91,11 @@ Ask the user targeted questions based on what you discovered. Tailor questions t
 
      - **The problem:** Agents often invent scope, skip confirmation, and ship code that diverges from what you actually wanted — especially on multi-step features.
      - **What IDD does:** Puts intent in versioned docs before code. Domain, architecture, and conventions live in tier files under `prompts/`. Each substantive feature gets a Request Brief (what/why/scope) and a feature doc (how) with explicit human gates before implementation.
-     - **The loop:** `/idd-brief` → `/idd-draft` → implement → `/idd-align` → verify → `/idd-ship`. One-time project setup: `/idd-bootstrap` to draft tier files from a Bootstrap Brief.
+     - **The loop:** `/idd-brief` → `/idd-draft` → implement → `/idd-align` → verify → `/idd-ship`. One-time platform setup: `/idd-bootstrap` to draft repo-root tier files from a Bootstrap Brief.
+     - **Monorepos with many projects:** After platform bootstrap, each app/package gets its own tree under `prompts/apps/<app>/` via `scaffold-app.sh` or `/idd-scaffold-app` — not another Bootstrap Brief.
      - **Good fit:** Teams, PM handoffs, features that change behavior or public interfaces, repos where consistency matters.
      - **Skip if:** Throwaway repos, solo quick hacks, or anywhere forge's generic setup is enough and you don't want extra ceremony.
-     - **What setup costs:** Scaffolding adds `.idd/`, `AGENTS.md`, and IDD commands now; tier bootstrap is a separate step afterward. Trivial fixes (typos, one-liners) stay outside the loop.
+     - **What setup costs:** Scaffolding adds `.idd/`, `AGENTS.md`, and IDD commands now; tier bootstrap is a separate step afterward; monorepo apps add one scaffold per project. Trivial fixes (typos, one-liners) stay outside the loop.
 
   4. Record the choice as **`idd_decision`**. If `.idd/` is already present, note it in discovery and offer `skip` or refresh via scaffold (overwrites methodology assets only).
 
@@ -172,7 +173,7 @@ Run **only when** `idd_decision` is `scaffold`. Skip entirely on `skip` or `plug
 
 **Process:**
 
-1. Confirm with the user what will be written (list above). Mention that tier files (`prompts/_domain.md`, etc.) are **not** created here — they need `/idd-bootstrap` after a Bootstrap Brief.
+1. Confirm with the user what will be written (list above). Mention that tier files (`prompts/_domain.md`, etc.) are **not** created here — they need `/idd-bootstrap` after a Bootstrap Brief. For monorepos with many apps, each project later gets `prompts/apps/<app>/` via `scaffold-app.sh` or `/idd-scaffold-app` (not `/idd-bootstrap`).
 2. Run the setup script from **this plugin's** `scripts/scaffold-idd.sh` against the project root:
 
    ```bash
@@ -218,8 +219,8 @@ Generate or update the project's CLAUDE.md and supporting docs.
   - **Intent-Driven Development** (when `idd_scaffolded` or `idd_decision` is `scaffold` / `plugin`):
     - State that substantive work uses IDD, not ad-hoc implementation plans
     - Point to `AGENTS.md` and `.idd/idd-workflow-spec.md`
-    - List commands: `/idd-brief`, `/idd-draft`, `/idd-align`, `/idd-ship`, `/idd-bootstrap`
-    - Note: tier files under `prompts/` are required before substantive work — run `/idd-bootstrap` if missing
+    - List commands: `/idd-brief`, `/idd-draft`, `/idd-align`, `/idd-ship`, `/idd-bootstrap`, `/idd-scaffold-app` (monorepo: one app tree)
+    - Note: tier files under `prompts/` are required before substantive work — run `/idd-bootstrap` if missing; monorepos add per-app trees with `/idd-scaffold-app` or `bash …/t9-idd/scaffold-app.sh <slug> .`
     - Add `@AGENTS.md` near the top of CLAUDE.md (or `@.idd/idd-methodology-preamble.md` if AGENTS.md is not used)
 - Do NOT include generic advice — everything should be specific to this project
 - If the project has existing API documentation (swagger.json, openapi.yaml), link to it from docs rather than duplicating content
@@ -369,7 +370,7 @@ Summarize what was created. Include **IDD next steps** when relevant:
 
 | `idd_decision` | Tell the user |
 |----------------|---------------|
-| `scaffold` | Tier bootstrap: `/idd-bootstrap` with a Bootstrap Brief. Feature work: `/idd-brief` → `/idd-draft`. Optional: `/t9-idd:init` to refresh or merge `AGENTS.md`. |
+| `scaffold` | Tier bootstrap: `/idd-bootstrap` with a Bootstrap Brief. Monorepo: `/idd-scaffold-app` or `scaffold-app.sh` once per app. Feature work: `/idd-brief` → `/idd-draft`. Optional: `/t9-idd:init` to refresh or merge `AGENTS.md`. |
 | `plugin` | Install t9-idd (commands above), then `/t9-idd:init`. |
 | `skip` | (no IDD mention) |
 
