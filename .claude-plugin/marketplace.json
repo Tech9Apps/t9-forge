@@ -9,6 +9,14 @@
         "url": "https://github.com/Tech9Apps/t9-forge.git"
       },
       "description": "Interactive agent that initializes projects for Claude Code"
+    },
+    {
+      "name": "t9-idd",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/Tech9Apps/t9-idd.git"
+      },
+      "description": "Intent-Driven Development scaffold — methodology assets, skills, commands, and Cursor rules"
     }
   ]
 }

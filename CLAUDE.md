@@ -13,7 +13,7 @@ This is a Claude Code plugin — not a standalone application. It provides:
 
 ```
 .claude-plugin/plugin.json    — Plugin manifest
-agents/init.md                — Main interactive agent (4-phase flow)
+agents/init.md                — Main interactive agent (1 → 2 → 2.5 → 2.6 → 3 → 4 → 8)
 skills/init/SKILL.md          — Entry point skill
 templates/
   skills/                     — Template skills (commit, test, code-review, pr, fix-issue)
@@ -46,10 +46,12 @@ Common placeholders used across templates:
 ## Agent Phases
 
 1. **Discovery** — explore codebase, find config, understand stack
-2. **Clarification** — ask user targeted questions
-3. **Companion Plugin Evaluation** (Phase 2.5) — evaluate fit for `obra/superpowers` and help user install via `/plugin` if it fits
-4. **Documentation** — generate CLAUDE.md and docs/
-5. **Template Customization** — fill templates, get approval, write to .claude/
+2. **Clarification** — ask user targeted questions (includes optional IDD yes/no)
+2.5. **Companion plugins** — evaluate superpowers; user installs via `/plugin` if desired
+2.6. **IDD scaffold** (conditional) — `scripts/scaffold-idd.sh` when user chose in-repo IDD
+3. **Documentation** — generate CLAUDE.md and docs/
+4. **Template customization** — fill templates, get approval, write to `.claude/`
+8. **Wrap-up** — summary and next steps
 
 ## Editing Guidelines
 

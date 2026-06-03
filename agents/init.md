@@ -10,7 +10,7 @@ You have access to: Read, Write, Edit, Bash, Grep, Glob, AskUserQuestion
 
 ## Workflow
 
-Follow these four phases in order. Do not skip phases or combine them without user consent.
+Follow these phases in order: **1 → 2 → 2.5 → 2.6 (if IDD scaffold) → 3 → 4 → 8**. Do not skip phases or combine them without user consent.
 
 ---
 
@@ -29,7 +29,8 @@ Explore the codebase to build a mental model. You are not limited to any predefi
 - Verification chain — what is the full set of checks to confirm the project is healthy? (build + lint + type-check + tests)
 - Dev server — how is the project served locally?
 - CI/CD — any pipeline configs? (.github/workflows, .gitlab-ci.yml, Jenkinsfile, etc.)
-- Existing `.claude/` directory, CLAUDE.md, or other AI tool configs (.cursorrules, .aider, etc.)
+- Existing `.claude/` directory, CLAUDE.md, AGENTS.md, or other AI tool configs (.cursorrules, .aider, etc.)
+- Existing IDD scaffold — `.idd/idd-workflow-spec.md`, `prompts/active/`, `prompts/shipped/`
 - Git history — recent commit style and conventions
 - CLI tools available — check for `gh` CLI, cloud configs (`.aws/`, `.gcloud/`, `.azure/`), monitoring tools, database CLIs, deployment tools
 - Existing API documentation — swagger.json, openapi.yaml, redoc, or generated docs
@@ -59,6 +60,43 @@ Ask the user targeted questions based on what you discovered. Tailor questions t
 - Verification preferences — what checks should pass before considering a change complete? (e.g., "always run tests and type-check", "lint is enough for small changes")
 - Context preservation — what information is critical to keep when conversations get long? (e.g., "always remember the database schema", "key API patterns in docs/api-conventions.md"). Specifically ask: what must survive compaction? (e.g., modified file lists, test commands, schema info, key API patterns)
 - PR workflow — do they use `gh pr create`? Any PR description conventions or templates?
+- **Intent-Driven Development (IDD)** — Tech9's methodology for keeping agent work aligned with explicit, human-confirmed intent. Evaluate fit using Phase 1 + 2 signals, then use `AskUserQuestion` with id `idd-workflow`:
+
+  **Signals it likely fits (lean yes):**
+  - Multi-person team or PM → engineering handoffs
+  - Substantive features shipped regularly (behavior, APIs, domain concepts)
+  - User wants plan-first workflow or expressed concern about agent drift / scope creep
+  - Long-lived codebase where domain vocabulary and architecture should stay consistent
+
+  **Signals it likely doesn't fit (lean skip):**
+  - One-off scripts, throwaway prototypes, or personal sandbox repos
+  - Solo dev who prefers minimal process on small changes
+  - User explicitly wants ship-fast, low-ceremony agent usage
+
+  **Process:**
+
+  1. In one sentence before the question, state what IDD is and your recommendation (with brief reasoning from the signals above).
+  2. Ask with this prompt:
+
+  > **Intent-Driven Development (IDD)** adds a structured workflow so agents don't freeload plans or silently change scope. Instead of jumping straight to code, substantive work goes through a Request Brief → feature doc → human-confirmed gates — grounded in versioned project context (`prompts/_domain.md`, `_architecture.md`, `_conventions.md`). Good for teams and real features; overkill for typo fixes. Would you like IDD in this project?
+
+  | Option id | Label (short) | Meaning |
+  |-----------|---------------|---------|
+  | `scaffold` | Yes — set up IDD files now | Run the forge IDD setup script in Phase 2.6 (installs `.idd/`, `prompts/`, IDD commands/rules; preserves an existing `CLAUDE.md`) |
+  | `plugin` | Yes — I'll install t9-idd later | User installs `t9-idd` themselves; remind them with `/t9-idd:init` after forge finishes |
+  | `skip` | No thanks | Do not install IDD |
+  | `more` | Tell me more first | Use the scripted explanation below, then ask again with the same options |
+
+  3. If **`more`**, explain in plain language (do not dump file paths first), then re-ask:
+
+     - **The problem:** Agents often invent scope, skip confirmation, and ship code that diverges from what you actually wanted — especially on multi-step features.
+     - **What IDD does:** Puts intent in versioned docs before code. Domain, architecture, and conventions live in tier files under `prompts/`. Each substantive feature gets a Request Brief (what/why/scope) and a feature doc (how) with explicit human gates before implementation.
+     - **The loop:** `/idd-brief` → `/idd-draft` → implement → `/idd-align` → verify → `/idd-ship`. One-time project setup: `/idd-bootstrap` to draft tier files from a Bootstrap Brief.
+     - **Good fit:** Teams, PM handoffs, features that change behavior or public interfaces, repos where consistency matters.
+     - **Skip if:** Throwaway repos, solo quick hacks, or anywhere forge's generic setup is enough and you don't want extra ceremony.
+     - **What setup costs:** Scaffolding adds `.idd/`, `AGENTS.md`, and IDD commands now; tier bootstrap is a separate step afterward. Trivial fixes (typos, one-liners) stay outside the loop.
+
+  4. Record the choice as **`idd_decision`**. If `.idd/` is already present, note it in discovery and offer `skip` or refresh via scaffold (overwrites methodology assets only).
 
 **Ask when relevant:**
 - Architecture decisions that aren't obvious from the code
@@ -121,6 +159,47 @@ This toolkit deliberately does **not** bundle superpowers — it's tightly coupl
 
 ---
 
+### Phase 2.6 — IDD scaffold (conditional)
+
+Run **only when** `idd_decision` is `scaffold`. Skip entirely on `skip` or `plugin` (for `plugin`, defer to the reminder in Phase 8).
+
+**What IDD adds (no implementation detail in this phase):**
+- `.idd/` — workflow + interaction specs, brief templates, skills
+- `prompts/active/` and `prompts/shipped/` (empty until bootstrap/features)
+- `.claude/commands/idd-*.md`, `.claude/agents/idd-planning-agent.md`
+- `.cursor/rules/idd-*.mdc`, `.cursor/commands/idd-*.md`
+- `AGENTS.md` — installed if missing; **never** overwrites an existing `AGENTS.md`
+
+**Process:**
+
+1. Confirm with the user what will be written (list above). Mention that tier files (`prompts/_domain.md`, etc.) are **not** created here — they need `/idd-bootstrap` after a Bootstrap Brief.
+2. Run the setup script from **this plugin's** `scripts/scaffold-idd.sh` against the project root:
+
+   ```bash
+   bash "<forge-plugin-root>/scripts/scaffold-idd.sh" .
+   ```
+
+   Resolve `<forge-plugin-root>` by searching upward from the cwd for `scripts/scaffold-idd.sh`, or use a sibling `t9-idd` checkout via `T9_IDD_ROOT`. The script may shallow-clone `Tech9Apps/t9-idd` if no local copy exists (requires network).
+
+3. Report stdout. If `AGENTS.md` was skipped because it already exists, tell the user to run `/t9-idd:init just AGENTS.md` to merge IDD directives.
+
+4. Set **`idd_scaffolded`** = true for later phases.
+
+**Do NOT:**
+- Run `/plugin` or `/t9-idd:init` slash commands yourself
+- Overwrite `CLAUDE.md` in this phase (the script preserves it)
+- Create tier files or feature docs without bootstrap
+
+For `idd_decision` = `plugin`, skip this phase and include install instructions in Phase 8:
+
+```
+/plugin marketplace add Tech9Apps/t9-forge
+/plugin install t9-idd@tech9-claude
+/t9-idd:init
+```
+
+---
+
 ### Phase 3 — Documentation Generation
 
 Generate or update the project's CLAUDE.md and supporting docs.
@@ -136,6 +215,12 @@ Generate or update the project's CLAUDE.md and supporting docs.
   - **Context & Workflow section** — include a concrete `When compacting, always preserve:` instruction listing what the user said must survive (e.g., modified file lists, test commands, schema info). Include `Use subagents for codebase exploration to keep main context clean`. Include reminder to use `/clear` between unrelated tasks and "read and understand existing code before modifying" convention
   - **Available Tools section** — CLI tools Claude can use (e.g., `gh` for GitHub operations, cloud CLIs, database tools). Only include tools actually available in the environment.
   - **Permissions guidance** — suggest safe commands to allowlist via `/permissions` to reduce interruptions (e.g., test, lint, format, build commands)
+  - **Intent-Driven Development** (when `idd_scaffolded` or `idd_decision` is `scaffold` / `plugin`):
+    - State that substantive work uses IDD, not ad-hoc implementation plans
+    - Point to `AGENTS.md` and `.idd/idd-workflow-spec.md`
+    - List commands: `/idd-brief`, `/idd-draft`, `/idd-align`, `/idd-ship`, `/idd-bootstrap`
+    - Note: tier files under `prompts/` are required before substantive work — run `/idd-bootstrap` if missing
+    - Add `@AGENTS.md` near the top of CLAUDE.md (or `@.idd/idd-methodology-preamble.md` if AGENTS.md is not used)
 - Do NOT include generic advice — everything should be specific to this project
 - If the project has existing API documentation (swagger.json, openapi.yaml), link to it from docs rather than duplicating content
 
@@ -269,11 +354,26 @@ Wait for the user to confirm before proceeding with customization.
 
 7. If the project has a `.gitignore`, offer to append `.claude/worktrees/` if it isn't already listed (supports parallel Claude sessions with git worktrees)
 8. If the user indicated they prefer a plan-first workflow in Phase 2, offer to create `.claude/settings.json` with `{"permissions": {"defaultMode": "plan"}}`
+9. If `idd_scaffolded`, offer to merge IDD entries into `.claude/settings.json` `context.files` (additive only): `.idd/idd-workflow-spec.md`, `.idd/idd-interaction-spec.md`, `.idd/idd-methodology-preamble.md`, and tier paths when they exist
 
 **Do NOT:**
 - Write any file without user approval
 - Include templates that don't apply to the project
 - Leave placeholders unfilled — if you can't determine a value, ask
+
+---
+
+### Phase 8 — Wrap-up
+
+Summarize what was created. Include **IDD next steps** when relevant:
+
+| `idd_decision` | Tell the user |
+|----------------|---------------|
+| `scaffold` | Tier bootstrap: `/idd-bootstrap` with a Bootstrap Brief. Feature work: `/idd-brief` → `/idd-draft`. Optional: `/t9-idd:init` to refresh or merge `AGENTS.md`. |
+| `plugin` | Install t9-idd (commands above), then `/t9-idd:init`. |
+| `skip` | (no IDD mention) |
+
+If both superpowers and IDD are in play: superpowers skills are for execution discipline; **IDD gates own substantive feature intent** — do not bypass Request Brief → feature doc for behavior changes.
 
 ---
 

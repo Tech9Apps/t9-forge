@@ -4,12 +4,15 @@ A Claude Code plugin that interactively initializes projects for Claude Code. It
 
 ## Installation
 
-Add the marketplace, then install the plugin:
+Add the Tech9 marketplace, then install one or both plugins:
 
 ```
 /plugin marketplace add Tech9Apps/t9-forge
 /plugin install t9-forge@tech9-claude
+/plugin install t9-idd@tech9-claude
 ```
+
+The `tech9-claude` marketplace also ships [t9-idd](https://github.com/Tech9Apps/t9-idd) for Intent-Driven Development. During `/t9-forge:init` you can scaffold IDD in-repo, or install `t9-idd` and run `/t9-idd:init` afterward.
 
 ### For development/testing
 
@@ -40,7 +43,7 @@ You can pass arguments to limit the scope:
 
 ## What It Does
 
-The init agent runs an interactive flow across five phases:
+The init agent runs an interactive flow: **1 → 2 → 2.5 → 2.6 (optional IDD) → 3 → 4 → 8**:
 
 ### Phase 1 — Discovery
 
@@ -61,11 +64,17 @@ The agent asks targeted questions based on what it discovered:
 
 It never assumes — it asks first.
 
+During clarification, the agent also asks whether you want **Intent-Driven Development (IDD)**. If you choose to scaffold it, Phase 2.6 runs `scripts/scaffold-idd.sh`, which applies the [t9-idd](https://github.com/Tech9Apps/t9-idd) layout (`.idd/`, `prompts/`, IDD commands) without overwriting your `CLAUDE.md`. Tier files still require `/idd-bootstrap` afterward.
+
 ### Phase 2.5 — Companion Plugin Evaluation
 
 The agent evaluates whether your project would benefit from [superpowers](https://github.com/obra/superpowers) — an external Claude Code plugin that adds workflow-discipline skills (brainstorming, TDD, systematic debugging, plan writing, subagent-driven development, git worktrees, verification gates).
 
 If it fits your project, the agent recommends installation and shows you the exact `/plugin` command. Superpowers is **not** bundled into this toolkit — it's maintained upstream and installed as its own plugin.
+
+### Phase 2.6 — IDD scaffold (optional)
+
+If you opted in during clarification, the agent runs `scripts/scaffold-idd.sh` to install [t9-idd](https://github.com/Tech9Apps/t9-idd) assets (`.idd/`, `prompts/active|shipped/`, IDD commands) without overwriting an existing `CLAUDE.md`. Platform tier files still need `/idd-bootstrap` afterward; monorepo apps use `scaffold-app.sh` per project.
 
 ### Phase 3 — Documentation Generation
 
@@ -96,6 +105,10 @@ Copies and customizes templates into your `.claude/` directory:
 - `/serve` — Start dev server(s)
 
 Each template is customized with your project's actual commands and conventions. The agent presents each one for your approval before writing.
+
+### Phase 8 — Wrap-up
+
+Summarizes what was created, IDD/t9-idd next steps if applicable, and superpowers install reminder.
 
 ## Design Principles
 
