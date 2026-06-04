@@ -83,7 +83,7 @@ Ask the user targeted questions based on what you discovered. Tailor questions t
   | Option id | Label (short) | Meaning |
   |-----------|---------------|---------|
   | `scaffold` | Yes — set up IDD files now | Run the forge IDD setup script in Phase 2.6 (installs `.idd/`, `prompts/`, IDD commands/rules; preserves an existing `CLAUDE.md`) |
-  | `plugin` | Yes — I'll install t9-idd later | User installs `t9-idd` themselves; remind them with `/t9-idd:init` after forge finishes |
+  | `plugin` | Yes — I'll install t9-idd later | User installs `t9-idd` themselves; remind them with `/t9-idd:setup` after forge finishes |
   | `skip` | No thanks | Do not install IDD |
   | `more` | Tell me more first | Use the scripted explanation below, then ask again with the same options |
 
@@ -182,12 +182,12 @@ Run **only when** `idd_decision` is `scaffold`. Skip entirely on `skip` or `plug
 
    Resolve `<forge-plugin-root>` by searching upward from the cwd for `scripts/scaffold-idd.sh`, or use a sibling `t9-idd` checkout via `T9_IDD_ROOT`. The script may shallow-clone `Tech9Apps/t9-idd` if no local copy exists (requires network).
 
-3. Report stdout. If `AGENTS.md` was skipped because it already exists, tell the user to run `/t9-idd:init just AGENTS.md` to merge IDD directives.
+3. Report stdout. If `AGENTS.md` was skipped because it already exists, tell the user to run `/t9-idd:setup just AGENTS.md` to merge IDD directives.
 
 4. Set **`idd_scaffolded`** = true for later phases.
 
 **Do NOT:**
-- Run `/plugin` or `/t9-idd:init` slash commands yourself
+- Run `/plugin` or `/t9-idd:setup` slash commands yourself
 - Overwrite `CLAUDE.md` in this phase (the script preserves it)
 - Create tier files or feature docs without bootstrap
 
@@ -196,7 +196,7 @@ For `idd_decision` = `plugin`, skip this phase and include install instructions 
 ```
 /plugin marketplace add Tech9Apps/t9-forge
 /plugin install t9-idd@tech9-claude
-/t9-idd:init
+/t9-idd:setup
 ```
 
 ---
@@ -370,8 +370,8 @@ Summarize what was created. Include **IDD next steps** when relevant:
 
 | `idd_decision` | Tell the user |
 |----------------|---------------|
-| `scaffold` | Tier bootstrap: `/idd-bootstrap` with a Bootstrap Brief. Monorepo: `/idd-scaffold-app` or `scaffold-app.sh` once per app. Feature work: `/idd-brief` → `/idd-draft`. Optional: `/t9-idd:init` to refresh or merge `AGENTS.md`. |
-| `plugin` | Install t9-idd (commands above), then `/t9-idd:init`. |
+| `scaffold` | Tier bootstrap: `/idd-bootstrap` with a Bootstrap Brief. Monorepo: `/idd-scaffold-app` or `scaffold-app.sh` once per app. Feature work: `/idd-brief` → `/idd-draft`. Optional: `/t9-idd:setup` to refresh or merge `AGENTS.md`. |
+| `plugin` | Install t9-idd (commands above), then `/t9-idd:setup`. |
 | `skip` | (no IDD mention) |
 
 If both superpowers and IDD are in play: superpowers skills are for execution discipline; **IDD gates own substantive feature intent** — do not bypass Request Brief → feature doc for behavior changes.

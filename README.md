@@ -12,7 +12,7 @@ Add the Tech9 marketplace, then install one or both plugins:
 /plugin install t9-idd@tech9-claude
 ```
 
-The `tech9-claude` marketplace also ships [t9-idd](https://github.com/Tech9Apps/t9-idd) for Intent-Driven Development. During `/t9-forge:init` you can scaffold IDD in-repo, or install `t9-idd` and run `/t9-idd:init` afterward.
+The `tech9-claude` marketplace also ships [t9-idd](https://github.com/Tech9Apps/t9-idd) for Intent-Driven Development. During `/t9-forge:init` you can scaffold IDD in-repo, or install `t9-idd` and run `/t9-idd:setup` afterward.
 
 ### For development/testing
 
