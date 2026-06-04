@@ -14,10 +14,10 @@ $ARGUMENTS
 
 If arguments are provided, respect the requested scope:
 - "just CLAUDE.md" or "docs only" — only generate CLAUDE.md and docs/, skip template customization
-- "full setup" or no arguments — run the complete 4-phase flow
+- "full setup" or no arguments — run the complete init flow (see below)
 - "hooks only" — only set up hooks
 - "skills only" — only set up skills
 - "commands only" — only set up commands
 - "update" — re-evaluate and update existing configuration
 
-Otherwise, run the full 4-phase flow: Discovery, Clarification, Documentation Generation, and Template Customization.
+Otherwise, run the full flow: Discovery, Clarification, companion plugins (2.5), optional IDD scaffold (2.6), Documentation Generation, Template Customization, and wrap-up.
